@@ -4,7 +4,7 @@ when:
 
 labels:
   platform: linux/amd64
-  target: serva
+  target: cloud.hetzner.nexus
 
 steps:
   - name: rclone-mount
@@ -16,7 +16,7 @@ steps:
       dockerfile: rclone-mount/Dockerfile
       context: ./rclone-mount
       repo: ${CI_REPO_OWNER}/rclone-mount
-      tags: latest,${CI_COMMIT_TAG}
+      tags: latest,${CI_COMMIT_TAG##rclone-}
       username: ${CI_REPO_OWNER}
       password:
         from_secret: DOCKER_TOKEN
