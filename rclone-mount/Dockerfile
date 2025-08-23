@@ -37,17 +37,13 @@ ENV DEBUG="false" \
 COPY --from=builder /go/src/github.com/rclone/rclone/rclone/rclone /usr/local/sbin/
 
 RUN apk --no-cache upgrade \
-    && apk add --no-cache --update ca-certificates fuse3 fuse fuse-dev curl gnupg dpkg \
+    && apk add --no-cache --update ca-certificates fuse3 fuse fuse-dev curl dpkg \
     && echo "Installing S6 Overlay" \
     && CPU_ARCH="$(printf $(dpkg --print-architecture) | sed -e 's/musl-linux-//g' -e 's/arm/aarch/g')" \
     && curl -o /tmp/s6-overlay.tar.gz -L \
     "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${CPU_ARCH}.tar.gz" \
-    && curl -o /tmp/s6-overlay.tar.gz.sig -L \
-    "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${CPU_ARCH}.tar.gz.sig" \
-    && gpg --keyserver pgp.surfnet.nl --recv-keys ${OVERLAY_KEY} \
-    && gpg --verify /tmp/s6-overlay.tar.gz.sig /tmp/s6-overlay.tar.gz \
     && tar xzf /tmp/s6-overlay.tar.gz -C / \
-    && apk del curl gnupg \
+    && apk del curl \
     && rm -rf /tmp/* /var/cache/apk/* /var/lib/apk/lists/*
 
 COPY rootfs/ /
