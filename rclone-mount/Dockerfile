@@ -12,7 +12,7 @@ WORKDIR /go/src/github.com/rclone/rclone/
 ENV GOPATH="/go" \
     GO111MODULE="on"
 
-RUN apk add --no-cache --update ca-certificates go git \
+RUN apk add --no-cache --update ca-certificates go git binutils-gold \
     && git clone --depth 1 --branch ${IMAGE_VERSION} https://github.com/rclone/rclone.git \
     && cd rclone \
     && git checkout tags/${IMAGE_VERSION} \
