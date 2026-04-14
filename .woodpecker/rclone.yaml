@@ -4,7 +4,7 @@ when:
 
 labels:
   platform: "linux/amd64"
-  target: "home.hyper.pulsar"
+  target: "home.hyper.magnetar"
 
 steps:
   - name: "rclone-mount"
